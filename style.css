@@ -1,0 +1,346 @@
+/* ===== リセット & ベース ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #4f7fff;
+  --primary-dark: #3a6be0;
+  --danger: #ff5c5c;
+  --done-color: #9ca3af;
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --text-sub: #6b7280;
+  --border: #e5e7eb;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --radius: 12px;
+  --footer-h: 76px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== アプリ全体レイアウト ===== */
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+/* ===== ヘッダー ===== */
+.header {
+  background: var(--primary);
+  color: #fff;
+  padding: 20px 20px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.header__count {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+/* ===== タブ ===== */
+.tabs {
+  display: flex;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 70px;
+  z-index: 9;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-sub);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab--active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* ===== メインコンテンツ ===== */
+.main {
+  flex: 1;
+  padding: 12px 12px calc(var(--footer-h) + 12px);
+  overflow-y: auto;
+}
+
+/* ===== Todo一覧 ===== */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ===== Todoアイテム ===== */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  box-shadow: var(--shadow);
+  animation: slideIn 0.18s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* チェックボックス */
+.todo-item__check {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.todo-item__check--done {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* テキスト */
+.todo-item__text {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.4;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+.todo-item__text--done {
+  color: var(--done-color);
+  text-decoration: line-through;
+}
+
+/* 編集・削除ボタン群 */
+.todo-item__actions {
+  display: flex;
+  gap: 6px;
+}
+
+.todo-item__btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s;
+}
+
+.todo-item__btn:active {
+  opacity: 0.7;
+}
+
+.todo-item__btn--edit {
+  background: #e8f0fe;
+  color: var(--primary);
+}
+
+.todo-item__btn--delete {
+  background: #fee2e2;
+  color: var(--danger);
+}
+
+/* ===== 空状態 ===== */
+.empty {
+  text-align: center;
+  color: var(--text-sub);
+  font-size: 14px;
+  margin-top: 48px;
+  display: none;
+}
+
+.empty--visible {
+  display: block;
+}
+
+/* ===== フッター入力エリア ===== */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 12px 12px env(safe-area-inset-bottom, 12px);
+  z-index: 10;
+}
+
+.input-area {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  height: 48px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--primary);
+}
+
+/* ===== 共通ボタン ===== */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn:active {
+  opacity: 0.8;
+  transform: scale(0.97);
+}
+
+.btn--add {
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  background: var(--primary);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* ===== モーダル ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+}
+
+.modal-overlay--open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 360px;
+  transform: translateY(12px);
+  transition: transform 0.18s;
+}
+
+.modal-overlay--open .modal {
+  transform: translateY(0);
+}
+
+.modal__title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.modal__input {
+  width: 100%;
+  height: 48px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 15px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.modal__input:focus {
+  border-color: var(--primary);
+}
+
+.modal__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn--cancel {
+  flex: 1;
+  height: 46px;
+  background: var(--bg);
+  color: var(--text-sub);
+}
+
+.btn--save {
+  flex: 1;
+  height: 46px;
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ===== デスクトップでは少し余白 ===== */
+@media (min-width: 480px) {
+  .app {
+    box-shadow: 0 0 40px rgba(0,0,0,0.1);
+  }
+}
