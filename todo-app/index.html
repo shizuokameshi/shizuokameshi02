@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo アプリ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📝 Todo</h1>
+      <p class="subtitle" id="summary">0件のタスク</p>
+    </header>
+
+    <div class="input-area">
+      <input
+        type="text"
+        id="todo-input"
+        placeholder="新しいタスクを入力..."
+        maxlength="200"
+        autocomplete="off"
+      >
+      <button id="add-btn" aria-label="追加">追加</button>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">すべて</button>
+      <button class="filter-btn" data-filter="active">未完了</button>
+      <button class="filter-btn" data-filter="done">完了済み</button>
+    </div>
+
+    <ul id="todo-list" aria-label="Todoリスト"></ul>
+
+    <div id="empty-state" class="empty-state hidden">
+      <span>タスクはありません</span>
+    </div>
+
+    <div class="footer" id="footer">
+      <span id="remaining"></span>
+      <button id="clear-done-btn" class="text-btn">完了済みを削除</button>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="タスクを編集">
+    <div class="modal-overlay"></div>
+    <div class="modal-box">
+      <h2>タスクを編集</h2>
+      <input type="text" id="edit-input" maxlength="200">
+      <div class="modal-actions">
+        <button id="modal-cancel" class="btn-secondary">キャンセル</button>
+        <button id="modal-save" class="btn-primary">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
